@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 class LoginPage extends StatefulWidget {
@@ -38,11 +39,23 @@ class _LoginPageState extends State<LoginPage> {
               setState(() {
                 _pass = valor;
               });
+            
             },
+            obscureText: true,
           ),
           SizedBox(height: 15.0,),
           RaisedButton(
-            onPressed: (){},
+            onPressed: (){
+              FirebaseAuth.instance.signInWithEmailAndPassword(email: _user, password: _pass)
+              .then((user){
+                Navigator.of(context).pushReplacementNamed('/homePage');
+              })
+              .catchError((e){
+                print(e);
+                print ("Error de singup page ************* signInWithEmailAndPassword LOGIN");
+              });
+              
+            },
             color: Colors.blue,
             textColor: Colors.white,
             child: Text("Inicia Session"),

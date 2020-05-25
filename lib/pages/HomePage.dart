@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 class HomePage extends StatelessWidget {
@@ -14,7 +15,9 @@ class HomePage extends StatelessWidget {
               Text("Estas logeado"),
               SizedBox(height: 15.0,),
               OutlineButton(
-                onPressed: (){},
+                onPressed: (){
+                  FirebaseAuth.instance.signOut().then((valor){}).catchError((e){print(e);});
+                },
                 borderSide: BorderSide(color: Colors.red, style: BorderStyle.solid, width: 3.0),
                 child: Text("Cerrar Session"),
               )

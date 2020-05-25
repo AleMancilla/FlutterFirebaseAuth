@@ -1,3 +1,4 @@
+import 'package:firebase_flutter_auth/services/UserManagment.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
@@ -14,13 +15,13 @@ class _SingUpPageState extends State<SingUpPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: Center(
-        child: _singUp(),
+        child: _singUp(context),
       ),
     );
   }
 
   
-  Widget _singUp(){
+  Widget _singUp(BuildContext context){
     return Center(
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
@@ -44,7 +45,26 @@ class _SingUpPageState extends State<SingUpPage> {
           ),
           SizedBox(height: 15.0,),
           RaisedButton(
-            onPressed: (){},
+            onPressed: (){
+              FirebaseAuth.instance
+              .createUserWithEmailAndPassword(email: _user, password: _pass)
+              .then((signedInUser){
+                UserManagment().almacenarNuevoUsuario(signedInUser,context);
+              })
+              .catchError((e){
+                print(e);
+                print ("Error de singup page ************* createUserWithEmailAndPassword");
+              });
+              FirebaseAuth.instance.signInWithEmailAndPassword(email: _user, password: _pass)
+              .then((user){
+                Navigator.of(context).pushReplacementNamed('/homePage');
+              })
+              .catchError((e){
+                print(e);
+                print ("Error de singup page ************* signInWithEmailAndPassword");
+              });
+            },
+            
             color: Colors.blue,
             textColor: Colors.white,
             child: Text("Crear Cuenta"),

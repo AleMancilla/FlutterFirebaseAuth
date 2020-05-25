@@ -6,8 +6,21 @@ class HomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Center(
-        child: Text("Hola Mundo"),
+      body: Center( 
+        child: Container(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: <Widget>[
+              Text("Estas logeado"),
+              SizedBox(height: 15.0,),
+              OutlineButton(
+                onPressed: (){},
+                borderSide: BorderSide(color: Colors.red, style: BorderStyle.solid, width: 3.0),
+                child: Text("Cerrar Session"),
+              )
+            ],
+          ),
+        )
       ),
     );
   }

@@ -32,7 +32,7 @@ class _LoginGoogleState extends State<LoginGoogle> {
                 backgroundColor: Colors.blueGrey[700], 
                 text: "LogOut ${snapshot.data.email}",
                 onPressed: ()async{
-                  await autService.singOutGoogle();
+                  await autService.singOutFacebook();
                 }, 
               );
             }
@@ -40,7 +40,7 @@ class _LoginGoogleState extends State<LoginGoogle> {
             return SignInButton(
               Buttons.Google, 
               onPressed: ()async{
-                await autService.singInWithGoogle();
+                await autService.signInFacebook();
               }
             );
           }

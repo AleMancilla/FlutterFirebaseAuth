@@ -5,8 +5,8 @@ import 'package:google_sign_in/google_sign_in.dart';
 class AuthService{
 
   bool isSignIn = false;
-  FirebaseAuth _auth = FirebaseAuth.instance;
-  FirebaseUser _user ;
+  FirebaseAuth auth = FirebaseAuth.instance;
+  FirebaseUser user ;
   GoogleSignIn _googleSignIn = GoogleSignIn();
   FacebookLogin _facebookLogin = FacebookLogin();
 
@@ -20,18 +20,18 @@ Future<FirebaseUser> singInWithGoogle() async {
     idToken: googleSignInAuthentication.idToken,
     accessToken: googleSignInAuthentication.accessToken
   );
-  AuthResult result = (await _auth.signInWithCredential(credential));
-  _user = result.user;
-  return _user;
+  AuthResult result = (await auth.signInWithCredential(credential));
+  user = result.user;
+  return user;
 }
 
 Future<FirebaseUser> signInFacebook() async {
   final FacebookLoginResult facebookLoginResult = await _facebookLogin.logIn(['email', 'public_profile']);
   FacebookAccessToken facebookAccessToken = facebookLoginResult.accessToken;
   AuthCredential authCredential = FacebookAuthProvider.getCredential(accessToken: facebookAccessToken.token);
-  AuthResult result = await _auth.signInWithCredential(authCredential);
-  _user = result.user;
-  return _user;
+  AuthResult result = await auth.signInWithCredential(authCredential);
+  user = result.user;
+  return user;
 }
 
 Future<void> singInFirebase(String email, String pass)async{

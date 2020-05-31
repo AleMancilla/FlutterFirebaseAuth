@@ -9,26 +9,11 @@ class AuthService{
   FirebaseUser _user ;
   GoogleSignIn _googleSignIn = GoogleSignIn();
   FacebookLogin _facebookLogin = FacebookLogin();
-  //GoogleSignIn _googleSignIn = GoogleSignIn();
-
-  // Future<void> handleSingIn ()async { // encargarse de iniciar session
-  // //https://www.youtube.com/watch?v=deJXYjEH6cs&t=753s
-  // GoogleSignInAccount googleSignInAccount = await _googleSignIn.signIn();
-  // GoogleSignInAuthentication googleSignInAuthentication = await googleSignInAccount.authentication;
-  // AuthCredential credential = GoogleAuthProvider.getCredential(
-  //   idToken: googleSignInAuthentication.idToken,
-  //   accessToken: googleSignInAuthentication.accessToken
-  // );
-  // AuthResult result = (await _auth.signInWithCredential(credential));
-  // _user = result.user;
-  // 
-  // }
 
 
 Stream<GoogleSignInAccount> get onGoogleCurrentUserChanged  => _googleSignIn.onCurrentUserChanged;
 
-Future<void> singInWithGoogle() async {
-  // await _googleSignIn.signIn();
+Future<FirebaseUser> singInWithGoogle() async {
   GoogleSignInAccount googleSignInAccount = await _googleSignIn.signIn();
   GoogleSignInAuthentication googleSignInAuthentication = await googleSignInAccount.authentication;
   AuthCredential credential = GoogleAuthProvider.getCredential(
@@ -37,25 +22,16 @@ Future<void> singInWithGoogle() async {
   );
   AuthResult result = (await _auth.signInWithCredential(credential));
   _user = result.user;
-  
+  return _user;
 }
 
-Future<void> signInFacebook() async {
-
-
-final FacebookLoginResult facebookLoginResult = await _facebookLogin.logIn(['email', 'public_profile']);
-FacebookAccessToken facebookAccessToken = facebookLoginResult.accessToken;
-AuthCredential authCredential = FacebookAuthProvider.getCredential(accessToken: facebookAccessToken.token);
-_user = (await _auth.signInWithCredential(authCredential)).user;
-
-//  _facebookLogin.logIn(['email','public_profile'])
-//  .then((result){
-//    switch(result.status){
-//      case FacebookLoginStatus.loggedIn:
-//        
-//      default 
-//    }
-//  }).catchError((e){print("**************************FACEBOOK ERROR $e");});
+Future<FirebaseUser> signInFacebook() async {
+  final FacebookLoginResult facebookLoginResult = await _facebookLogin.logIn(['email', 'public_profile']);
+  FacebookAccessToken facebookAccessToken = facebookLoginResult.accessToken;
+  AuthCredential authCredential = FacebookAuthProvider.getCredential(accessToken: facebookAccessToken.token);
+  AuthResult result = await _auth.signInWithCredential(authCredential);
+  _user = result.user;
+  return _user;
 }
 
 Future<void> singInFirebase(String email, String pass)async{

@@ -1,3 +1,4 @@
+import 'package:firebase_flutter_auth/services/AuthService.dart';
 import 'package:firebase_flutter_auth/services/LoginState.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_signin_button/button_list.dart';
@@ -33,7 +34,7 @@ class SignInFirebaseAuth extends StatelessWidget {
     return SignInButton(
       Buttons.Google, 
       onPressed: (){
-        Provider.of<LoginState>(context).login();
+        Provider.of<LoginState>(context).loginGoogle();
       },
       text: "Iniciar Session",
     ) ;
@@ -43,7 +44,8 @@ class SignInFirebaseAuth extends StatelessWidget {
     return SignInButton(
       Buttons.Facebook , 
       onPressed: (){
-        Provider.of<LoginState>(context).login();
+        //autService.signInFacebook();
+        Provider.of<LoginState>(context).loginFacebook();
       },
       text: "Iniciar Session",
     ) ;

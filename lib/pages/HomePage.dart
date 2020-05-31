@@ -1,5 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_flutter_auth/services/LoginState.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class HomePage extends StatelessWidget {
   const HomePage({Key key}) : super(key: key);
@@ -16,7 +18,7 @@ class HomePage extends StatelessWidget {
               SizedBox(height: 15.0,),
               OutlineButton(
                 onPressed: (){
-                  FirebaseAuth.instance.signOut().then((valor){}).catchError((e){print(e);});
+                  Provider.of<LoginState>(context).logout();
                 },
                 borderSide: BorderSide(color: Colors.red, style: BorderStyle.solid, width: 3.0),
                 child: Text("Cerrar Session"),
